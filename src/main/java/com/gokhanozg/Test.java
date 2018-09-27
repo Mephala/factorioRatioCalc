@@ -44,12 +44,41 @@ public class Test {
                 double in4c = !isEmpty(in4t.getText()) ? Double.parseDouble(in4q.getText()) / Double.parseDouble(in4t.getText()) : 0d;
                 if (in1c != 0d && in2c != 0d && in3c != 0d && in4c != 0d) {
                     results.setText(calculate4way(in1c, in2c, in3c, in4c));
-                } else if (in1c != 0d) {
+                } else if (in1c != 0d && in2c != 0d && in3c != 0d) {
+                    results.setText(calculate3Way(in1c, in2c, in3c));
+                } else if (in1c != 0d && in2c != 0d) {
+                    results.setText(calculate2Way(in1c, in2c));
+                } else {
                     results.setText(calculate1Way(in1c));
                 }
             }
         });
     }
+
+    private String calculate2Way(double in1c, double in2c) {
+        double time = Double.parseDouble(t.getText());
+        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
+        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
+        double gcd = Util.gcd(req1, req2,  1d);
+        double val1 = req1 / gcd;
+        double val2 = req2 / gcd;
+        double val3 = 1d / gcd;
+        return val1 + " - " + val2 + " - " + val3 ;
+    }
+
+    private String calculate3Way(double in1c, double in2c, double in3c) {
+        double time = Double.parseDouble(t.getText());
+        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
+        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
+        double req3 = Double.parseDouble(q3.getText()) / time / in3c;
+        double gcd = Util.gcd(req1, req2, req3, 1d);
+        double val1 = req1 / gcd;
+        double val2 = req2 / gcd;
+        double val3 = req3 / gcd;
+        double val4 = 1d / gcd;
+        return val1 + " - " + val2 + " - " + val3 + " - " + val4;
+    }
+
 
     private String calculate1Way(double in1c) {
         double time = Double.parseDouble(t.getText());
