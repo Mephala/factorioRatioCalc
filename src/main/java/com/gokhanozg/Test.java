@@ -25,6 +25,7 @@ public class Test {
     private JTextField q4;
     private JTextField t;
     private JButton resetButton;
+    private static final int MAX_FACTORY = 1000;
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -53,55 +54,90 @@ public class Test {
                 }
             }
         });
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                in1t.setText(null);
+                in2t.setText(null);
+                in3t.setText(null);
+                in4t.setText(null);
+                in1q.setText(null);
+                in2q.setText(null);
+                in3q.setText(null);
+                in4q.setText(null);
+                q1.setText(null);
+                q2.setText(null);
+                q3.setText(null);
+                q4.setText(null);
+                t.setText(null);
+            }
+        });
+
     }
 
     private String calculate2Way(double in1c, double in2c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
-        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
-        double gcd = Util.gcd(req1, req2,  1d);
-        double val1 = req1 / gcd;
-        double val2 = req2 / gcd;
-        double val3 = 1d / gcd;
-        return val1 + " - " + val2 + " - " + val3 ;
+        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
+        double req2 = Util.normalizeDouble(Double.parseDouble(q2.getText()) / time / in2c);
+        int whole = 1;
+        for (; whole < MAX_FACTORY; whole++) {
+            double tmp1 = req1 * whole;
+            double tmp2 = req2 * whole;
+            if (Util.areWhole(tmp1, tmp2)) {
+                break;
+            }
+        }
+        return req1 * whole + " - " + req2 * whole + " - " + whole;
     }
 
     private String calculate3Way(double in1c, double in2c, double in3c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
-        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
-        double req3 = Double.parseDouble(q3.getText()) / time / in3c;
-        double gcd = Util.gcd(req1, req2, req3, 1d);
-        double val1 = req1 / gcd;
-        double val2 = req2 / gcd;
-        double val3 = req3 / gcd;
-        double val4 = 1d / gcd;
-        return val1 + " - " + val2 + " - " + val3 + " - " + val4;
+        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
+        double req2 = Util.normalizeDouble(Double.parseDouble(q2.getText()) / time / in2c);
+        double req3 = Util.normalizeDouble(Double.parseDouble(q3.getText()) / time / in3c);
+        int whole = 1;
+        for (; whole < MAX_FACTORY; whole++) {
+            double tmp1 = req1 * whole;
+            double tmp2 = req2 * whole;
+            double tmp3 = req3 * whole;
+            if (Util.areWhole(tmp1, tmp2, tmp3)) {
+                break;
+            }
+        }
+        return req1 * whole + " - " + req2 * whole + " - " + req3 * whole + " - " + whole;
     }
 
 
     private String calculate1Way(double in1c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
-        double gcd = Util.gcd(req1, 1d);
-        double val1 = req1 / gcd;
-        double val2 = 1d / gcd;
-        return val1 + " - " + val2;
+        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
+        int whole = 1;
+        for (; whole < MAX_FACTORY; whole++) {
+            double tmp1 = req1 * whole;
+            if (Util.areWhole(tmp1)) {
+                break;
+            }
+        }
+        return req1 * whole + " - " + whole;
     }
 
     private String calculate4way(double in1c, double in2c, double in3c, double in4c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
-        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
-        double req3 = Double.parseDouble(q3.getText()) / time / in3c;
-        double req4 = Double.parseDouble(q4.getText()) / time / in4c;
-        double gcd = Util.gcd(req1, req2, req3, req4, 1d);
-        double val1 = req1 / gcd;
-        double val2 = req1 / gcd;
-        double val3 = req1 / gcd;
-        double val4 = req1 / gcd;
-        double val5 = 1d / gcd;
-        return val1 + " - " + val2 + " - " + val3 + " - " + val4 + " - " + val5;
+        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
+        double req2 = Util.normalizeDouble(Double.parseDouble(q2.getText()) / time / in2c);
+        double req3 = Util.normalizeDouble(Double.parseDouble(q3.getText()) / time / in3c);
+        double req4 = Util.normalizeDouble(Double.parseDouble(q4.getText()) / time / in4c);
+        int whole = 1;
+        for (; whole < MAX_FACTORY; whole++) {
+            double tmp1 = req1 * whole;
+            double tmp2 = req2 * whole;
+            double tmp3 = req3 * whole;
+            double tmp4 = req4 * whole;
+            if (Util.areWhole(tmp1, tmp2, tmp3, tmp4)) {
+                break;
+            }
+        }
+        return req1 * whole + " - " + req2 * whole + " - " + req3 * whole + " - " + req4 * whole + " - " + whole;
     }
 
     public boolean isEmpty(String s) {
