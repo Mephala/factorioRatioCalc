@@ -77,8 +77,8 @@ public class Test {
 
     private String calculate2Way(double in1c, double in2c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
-        double req2 = Util.normalizeDouble(Double.parseDouble(q2.getText()) / time / in2c);
+        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
+        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
         int whole = 1;
         for (; whole < MAX_FACTORY; whole++) {
             double tmp1 = req1 * whole;
@@ -87,14 +87,26 @@ public class Test {
                 break;
             }
         }
+        if(whole == MAX_FACTORY){
+            whole = 1;
+            req1 = Util.normalizeDouble(req1);
+            req2 = Util.normalizeDouble(req2);
+            for (; whole < MAX_FACTORY; whole++) {
+                double tmp1 = req1 * whole;
+                double tmp2 = req2 * whole;
+                if (Util.areWhole(tmp1, tmp2)) {
+                    break;
+                }
+            }
+        }
         return req1 * whole + " - " + req2 * whole + " - " + whole;
     }
 
     private String calculate3Way(double in1c, double in2c, double in3c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
-        double req2 = Util.normalizeDouble(Double.parseDouble(q2.getText()) / time / in2c);
-        double req3 = Util.normalizeDouble(Double.parseDouble(q3.getText()) / time / in3c);
+        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
+        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
+        double req3 = Double.parseDouble(q3.getText()) / time / in3c;
         int whole = 1;
         for (; whole < MAX_FACTORY; whole++) {
             double tmp1 = req1 * whole;
@@ -104,13 +116,27 @@ public class Test {
                 break;
             }
         }
+        if(whole == MAX_FACTORY){
+            whole = 1;
+            req1 = Util.normalizeDouble(req1);
+            req2 = Util.normalizeDouble(req2);
+            req3 = Util.normalizeDouble(req3);
+            for (; whole < MAX_FACTORY; whole++) {
+                double tmp1 = req1 * whole;
+                double tmp2 = req2 * whole;
+                double tmp3 = req3 * whole;
+                if (Util.areWhole(tmp1, tmp2, tmp3)) {
+                    break;
+                }
+            }
+        }
         return req1 * whole + " - " + req2 * whole + " - " + req3 * whole + " - " + whole;
     }
 
 
     private String calculate1Way(double in1c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
+        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
         int whole = 1;
         for (; whole < MAX_FACTORY; whole++) {
             double tmp1 = req1 * whole;
@@ -118,15 +144,25 @@ public class Test {
                 break;
             }
         }
+        if(whole == MAX_FACTORY){
+            whole = 1;
+            req1 = Util.normalizeDouble(req1);
+            for (; whole < MAX_FACTORY; whole++) {
+                double tmp1 = req1 * whole;
+                if (Util.areWhole(tmp1)) {
+                    break;
+                }
+            }
+        }
         return req1 * whole + " - " + whole;
     }
 
     private String calculate4way(double in1c, double in2c, double in3c, double in4c) {
         double time = Double.parseDouble(t.getText());
-        double req1 = Util.normalizeDouble(Double.parseDouble(q1.getText()) / time / in1c);
-        double req2 = Util.normalizeDouble(Double.parseDouble(q2.getText()) / time / in2c);
-        double req3 = Util.normalizeDouble(Double.parseDouble(q3.getText()) / time / in3c);
-        double req4 = Util.normalizeDouble(Double.parseDouble(q4.getText()) / time / in4c);
+        double req1 = Double.parseDouble(q1.getText()) / time / in1c;
+        double req2 = Double.parseDouble(q2.getText()) / time / in2c;
+        double req3 = Double.parseDouble(q3.getText()) / time / in3c;
+        double req4 = Double.parseDouble(q4.getText()) / time / in4c;
         int whole = 1;
         for (; whole < MAX_FACTORY; whole++) {
             double tmp1 = req1 * whole;
